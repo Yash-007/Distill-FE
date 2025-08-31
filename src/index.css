@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0A0A0F] text-white font-jakarta antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-jakarta;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-[#1A1A23] rounded-xl shadow-lg p-6 border border-[#2A2A35] backdrop-blur-sm;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 bg-[#7C3AED] text-white rounded-lg hover:bg-[#6D28D9] transition-all duration-300 
+           flex items-center justify-center gap-2 font-semibold shadow-lg hover:shadow-purple-500/20
+           hover:scale-[1.02] active:scale-[0.98];
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-[#7C3AED] to-[#9F7AEA] bg-clip-text text-transparent;
+  }
+
+  .heading-xl {
+    @apply text-5xl font-bold tracking-tight;
+  }
+
+  .heading-lg {
+    @apply text-3xl font-bold tracking-tight;
+  }
+
+  .heading-md {
+    @apply text-2xl font-semibold;
+  }
+
+  .body-lg {
+    @apply text-xl leading-relaxed;
+  }
+
+  .body-base {
+    @apply text-base leading-relaxed;
+  }
+}
