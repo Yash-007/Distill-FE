@@ -16,38 +16,34 @@ const item = {
   show: { opacity: 1, y: 0 }
 };
 
+const isValidUUID = (uuid) => {
+  const regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  return regex.test(uuid);
+};
+
 export default function Digest() {
   const { messageId } = useParams();
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchDigest = async () => {
+      if (!isValidUUID(messageId)) {
+        setIsLoading(false);
+        return;
+      }
+
       try {
-        setIsLoading(true);
-        setError(null);
-        
         const response = await fetch(`https://distill-dmoq.onrender.com/summaries/?msgId=${messageId}`);
-        if (!response.ok) {
-          throw new Error('No summaries found');
-        }
-        
         const result = await response.json();
-        if (!result.summaries || result.summaries.length === 0) {
-          throw new Error('No summaries found');
-        }
         setData(result);
       } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
+        console.error('Error fetching digest:', err);
       }
+      setIsLoading(false);
     };
 
-    if (messageId) {
-      fetchDigest();
-    }
+    fetchDigest();
   }, [messageId]);
 
   if (isLoading) {
@@ -62,7 +58,7 @@ export default function Digest() {
     );
   }
 
-  if (error || !data?.summaries?.length) {
+  if (!isValidUUID(messageId) || !data?.summaries?.length) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -75,7 +71,9 @@ export default function Digest() {
           </div>
           <h2 className="heading-md text-white mb-3">No Summaries Found</h2>
           <p className="text-gray-400 mb-8 max-w-md">
-            We couldn't find any summaries for this digest. This might happen if the message ID is incorrect or the content is still being processed.
+            {!isValidUUID(messageId) 
+              ? "The provided message ID is not valid. Please check the URL and try again."
+              : "We couldn't find any summaries for this digest. The content might still be processing."}
           </p>
           <Link 
             to="/"
