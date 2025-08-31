@@ -65,7 +65,7 @@ export default function Home() {
         </Link>
       </motion.div>
 
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
@@ -77,7 +77,7 @@ export default function Home() {
         <p className="body-base text-gray-400 max-w-2xl">
           Three simple steps to transform information overload into actionable insights
         </p>
-      </motion.div>
+      </motion.div> */}
     </div>
   );
 }
