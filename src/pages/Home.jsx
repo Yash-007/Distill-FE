@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { BoltIcon, ForwardIcon, DocumentTextIcon, EnvelopeIcon, ClipboardIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { BoltIcon, ForwardIcon, DocumentTextIcon, EnvelopeIcon, ClipboardIcon, PlayIcon } from '@heroicons/react/24/solid';
+import { useState, useEffect } from 'react';
 
 const steps = [
   {
@@ -24,6 +24,11 @@ const steps = [
 export default function Home() {
   const [copied, setCopied] = useState(false);
 
+  // Reset scroll position when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleCopyEmail = () => {
     navigator.clipboard.writeText('distillhq@gmail.com');
     setCopied(true);
@@ -31,7 +36,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-[90vh] flex flex-col items-center justify-center px-4 py-8 sm:py-12">
+    <div className="min-h-screen flex flex-col items-center pt-8 sm:pt-12 px-4">
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -66,20 +71,44 @@ export default function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="flex flex-col items-center space-y-4 w-full max-w-md px-4"
+        className="flex flex-col items-center space-y-6 w-full max-w-2xl px-4"
       >
-        <div className="relative w-full">
-          <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-indigo-600/20 rounded-lg blur-lg" />
-          <div className="relative bg-[#1A1A23] rounded-lg border border-[#2A2A35] p-4 flex items-center justify-between">
-            <span className="text-gray-300 font-mono">distillhq@gmail.com</span>
-            <button
-              onClick={handleCopyEmail}
-              className="flex items-center justify-center w-8 h-8 rounded-md bg-[#2A2A35] hover:bg-[#7C3AED] transition-colors"
-              title="Copy email address"
-            >
-              <ClipboardIcon className="w-4 h-4 text-white" />
-            </button>
+        <div className="flex flex-col sm:flex-row w-full items-center gap-4">
+          <div className="relative w-full sm:w-2/3">
+            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-indigo-600/20 rounded-lg blur-lg" />
+            <div className="relative bg-[#1A1A23] rounded-lg border border-[#2A2A35] p-4 flex items-center justify-between">
+              <span className="text-gray-300 font-mono">distillhq@gmail.com</span>
+              <button
+                onClick={handleCopyEmail}
+                className="flex items-center justify-center w-8 h-8 rounded-md bg-[#2A2A35] hover:bg-[#7C3AED] transition-colors"
+                title="Copy email address"
+              >
+                <ClipboardIcon className="w-4 h-4 text-white" />
+              </button>
+            </div>
           </div>
+          
+          <Link
+            to="/c5d044fd-acc1-4200-9a0f-5eb9f1a7fbfd"
+            className="w-full sm:w-1/3 inline-flex items-center justify-center px-6 py-4 rounded-lg bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition-colors font-medium group whitespace-nowrap"
+          >
+            View Sample Digest
+            <svg 
+              width="20" 
+              height="20" 
+              viewBox="0 0 16 16" 
+              fill="none" 
+              className="ml-2 transition-transform group-hover:translate-x-1"
+            >
+              <path 
+                d="M6 12L10 8L6 4" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
         </div>
         {copied && (
           <motion.div
@@ -132,15 +161,33 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
-          className="mt-12 text-center"
+          className="mt-16 px-4"
         >
-          <Link
-            to="/c56f06dc-f00b-483e-bf4c-67cb1ab58511"
-            className="inline-flex items-center px-6 py-3 rounded-lg bg-[#2A2A35] text-white hover:bg-[#7C3AED] transition-colors font-medium"
-          >
-            View Example Digest
-          </Link>
+          <div className="relative w-full max-w-3xl mx-auto">
+            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-indigo-600/20 rounded-xl blur-lg" />
+            <div className="relative bg-[#1A1A23] rounded-xl border border-[#2A2A35] overflow-hidden">
+              <div className="aspect-video">
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/tFqKlYTJDBw"
+                  title="Distill - How it works"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="p-4 flex items-center justify-between">
+                <div>
+                  <h3 className="text-white font-semibold">Watch How It Works</h3>
+                  <p className="text-gray-400 text-sm">See Distill in action and learn how it works under the hood</p>
+                </div>
+                <PlayIcon className="w-8 h-8 text-[#7C3AED]" />
+              </div>
+            </div>
+          </div>
         </motion.div>
+
+
       </motion.div>
     </div>
   );
